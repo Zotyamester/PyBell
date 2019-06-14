@@ -1,0 +1,10 @@
+C:\Users\szatm\source\repos\Bell3Server\Bell3Server\bin\Debug\Bell3Server.exe.config
+C:\Users\szatm\source\repos\Bell3Server\Bell3Server\bin\Debug\Bell3Server.exe
+C:\Users\szatm\source\repos\Bell3Server\Bell3Server\bin\Debug\Bell3Server.pdb
+C:\Users\szatm\source\repos\Bell3Server\Bell3Server\obj\Debug\Bell3Server.csprojAssemblyReference.cache
+C:\Users\szatm\source\repos\Bell3Server\Bell3Server\obj\Debug\Bell3Server.Form1.resources
+C:\Users\szatm\source\repos\Bell3Server\Bell3Server\obj\Debug\Bell3Server.Properties.Resources.resources
+C:\Users\szatm\source\repos\Bell3Server\Bell3Server\obj\Debug\Bell3Server.csproj.GenerateResource.cache
+C:\Users\szatm\source\repos\Bell3Server\Bell3Server\obj\Debug\Bell3Server.csproj.CoreCompileInputs.cache
+C:\Users\szatm\source\repos\Bell3Server\Bell3Server\obj\Debug\Bell3Server.exe
+C:\Users\szatm\source\repos\Bell3Server\Bell3Server\obj\Debug\Bell3Server.pdb

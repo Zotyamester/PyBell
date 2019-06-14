@@ -1,0 +1,10 @@
+C:\Users\szatm\source\repos\Bell2\Bell2\bin\Debug\Bell2.exe.config
+C:\Users\szatm\source\repos\Bell2\Bell2\bin\Debug\Bell2.exe
+C:\Users\szatm\source\repos\Bell2\Bell2\bin\Debug\Bell2.pdb
+C:\Users\szatm\source\repos\Bell2\Bell2\obj\Debug\Bell2.csprojAssemblyReference.cache
+C:\Users\szatm\source\repos\Bell2\Bell2\obj\Debug\Bell2.Form1.resources
+C:\Users\szatm\source\repos\Bell2\Bell2\obj\Debug\Bell2.Properties.Resources.resources
+C:\Users\szatm\source\repos\Bell2\Bell2\obj\Debug\Bell2.csproj.GenerateResource.cache
+C:\Users\szatm\source\repos\Bell2\Bell2\obj\Debug\Bell2.csproj.CoreCompileInputs.cache
+C:\Users\szatm\source\repos\Bell2\Bell2\obj\Debug\Bell2.exe
+C:\Users\szatm\source\repos\Bell2\Bell2\obj\Debug\Bell2.pdb
