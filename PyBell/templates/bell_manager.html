@@ -1,0 +1,27 @@
+<!doctype html>
+<title>Bell</title>
+<h2>Manage bell</h2>
+<p>
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+		<ul class=flashes>
+		{% for message in messages %}
+		  <li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	  {% endif %}
+	{% endwith %}
+</p>
+<a href="/">Home</a>
+<form method="post" action="/manage_bell" enctype="multipart/form-data">
+    <dl>
+		<p>
+			<input type="radio" name="state" value="start">Start</input>
+            <input type="radio" name="state" value="stop">Stop</input>
+            <input type="radio" name="state" value="restart">Restart</input>
+		</p>
+    </dl>
+    <p>
+		<input type="submit" value="Submit">
+	</p>
+</form>
