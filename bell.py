@@ -61,12 +61,10 @@ def bell_stop():
 
 def bell_main():
     while running:
-        #print(schedule.next_run())
         schedule.run_pending()
         time.sleep(1)
 
 if __name__ == '__main__':
     load_schedule('configs/mybellconfig.xml')
-    #bell_start()
     running = True
     bell_main()
