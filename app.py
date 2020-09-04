@@ -1,7 +1,7 @@
 from flask import Flask
 
-SOUND_FOLDER = 'C:/Users/Zoli/Documents/PyBell/sounds'
-CONFIG_FOLDER = 'C:/Users/Zoli/Documents/PyBell/configs'
+SOUND_FOLDER = './sounds'
+CONFIG_FOLDER = './configs'
 CURRENT_CONFIG = 'BellConfig.xml'
 
 app = Flask(__name__)

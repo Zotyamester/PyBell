@@ -1,30 +1,18 @@
-<!doctype html>
-<title>Bell</title>
-<h2>Manage configs</h2>
-<p>
-	{% with messages = get_flashed_messages() %}
-	  {% if messages %}
-		<ul class=flashes>
-		{% for message in messages %}
-		  <li>{{ message }}</li>
-		{% endfor %}
-		</ul>
-	  {% endif %}
-	{% endwith %}
-</p>
-<a href="/">Home</a>
-<h3>Current config: {{ current_config }}</h3>
-<form method="post" action="/manage_configs" enctype="multipart/form-data">
-    <dl>
+{% extends "base.html" %}
+{% block title %}Manage configs{% endblock %}
+
+{% block main %}
+	<h2>Current config: "{{ current_config }}".</h2>
+	<form method="post" action="/manage_configs" enctype="multipart/form-data">
 		<p>
 			<select name="config_select">
-                {% for filename in files %}
-                <option value="{{ filename }}">{{ filename }}</option>
-                {% endfor %}
-            </select>
+				{% for filename in files %}
+					<option value="{{ filename }}">{{ filename }}</option>
+				{% endfor %}
+			</select>
 		</p>
-    </dl>
-    <p>
-		<input type="submit" value="Submit">
-	</p>
-</form>
+		<p>
+			<input type="submit" value="Submit">
+		</p>
+	</form>
+{% endblock %}

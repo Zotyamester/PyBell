@@ -24,28 +24,31 @@ def load_schedule(filename):
         days = {x : (days_node.attributes[x].firstChild.nodeValue == '1') for x in WEEK_}
         time_nodes = ring.getElementsByTagName('time')
         times = [{x : int(time_node.attributes[x].firstChild.nodeValue) for x in TIME_} for time_node in time_nodes]
-        print(times)
         if days['mo']:
             for timestamp in times:
-                schedule.every().monday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile)
+                schedule.every().monday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
         if days['tu']:
             for timestamp in times:
-                schedule.every().tuesday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile)
+                schedule.every().tuesday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
         if days['we']:
             for timestamp in times:
-                schedule.every().wednesday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile)
+                schedule.every().wednesday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
         if days['th']:
             for timestamp in times:
-                schedule.every().thursday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile)
+                schedule.every().thursday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
         if days['fr']:
             for timestamp in times:
-                schedule.every().friday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile)
+                schedule.every().friday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
         if days['sa']:
             for timestamp in times:
-                schedule.every().saturday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile)
+                schedule.every().saturday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
         if days['su']:
             for timestamp in times:
-                schedule.every().sunday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile)
+                schedule.every().sunday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
+
+def play_instant(filename):
+    soundfile = os.path.join(app.config['SOUND_FOLDER'], filename)
+    playsound(filename, False)
 
 def bell_start():
     global running, th
@@ -65,6 +68,6 @@ def bell_main():
         time.sleep(1)
 
 if __name__ == '__main__':
-    load_schedule('configs/mybellconfig.xml')
+    load_schedule(os.path.join(app.config['CONFIG_FOLDER'], app.config['CURRENT_CONFIG']))
     running = True
     bell_main()
