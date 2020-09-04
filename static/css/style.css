@@ -13,9 +13,11 @@ header {
 }
 
 main {
-    background-color: #eceff4;
     border: hidden;
     border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #eceff4;
 }
 
 h1 {
@@ -80,4 +82,29 @@ select {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+
+p a {
+    color: #2e3440;
+    font-style: italic;
+}
+
+p a:link {
+    color: #2e3440;
+    font-style: italic;
+}
+
+p a:visited {
+    color: #2e3440;
+    font-style: italic;
+}
+
+p a:hover {
+    color: #2e3440;
+    font-style: italic;
+}
+
+p a:active {
+    color: #2e3440;
+    font-style: italic;
 }

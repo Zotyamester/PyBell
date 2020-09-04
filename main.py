@@ -91,7 +91,7 @@ def play_instant_():
 	sound_select = request.form['sound_select']
 	filename = secure_filename(sound_select)
 	b.play_instant(os.path.join(app.config['SOUND_FOLDER'], filename))
-	flash('Now playing the requested sound')
+	flash('Now playing "%s".' % filename)
 	return redirect('/manage_bell')
 
 if __name__ == "__main__":
