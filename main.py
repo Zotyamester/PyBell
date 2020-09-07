@@ -6,8 +6,8 @@ import urllib.request
 from flask import Flask, flash, redirect, render_template, request, url_for
 from werkzeug.utils import secure_filename
 
-from app import app
 import bell as b
+from app import app
 
 ALLOWED_SOUND_EXTENSIONS = {'mp3', 'wav'}
 ALLOWED_CONFIG_EXTENSIONS = {'xml', 'bellxml'}

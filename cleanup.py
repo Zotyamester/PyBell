@@ -2,6 +2,7 @@ import os
 
 from app import app
 
+
 def list_all_files(dirname):
 	all_files = []
 	for root, dirs, files in os.walk(dirname):
