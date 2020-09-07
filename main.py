@@ -41,23 +41,23 @@ def upload(request, allowed_exts, folder):
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
-def home_():
+def home():
 	return render_template('home.html')
 
 @app.route('/upload_sound', methods=['GET', 'POST'])
-def upload_sound_():
+def upload_sound():
 	if request.method == 'POST':
 		return upload(request, ALLOWED_SOUND_EXTENSIONS, 'SOUND_FOLDER')
 	return render_template('uploader.html', filetype='sound', action_url='/upload_sound')
 
 @app.route('/upload_config', methods=['GET', 'POST'])
-def upload_config_():
+def upload_config():
 	if request.method == 'POST':
 		return upload(request, ALLOWED_CONFIG_EXTENSIONS, 'CONFIG_FOLDER')
 	return render_template('uploader.html', filetype='config', action_url='/upload_config')
 
 @app.route('/manage_configs', methods=['GET', 'POST'])
-def manage_configs_():
+def manage_configs():
 	if request.method == 'POST':
 		config_select = request.form['config_select']
 		filename = secure_filename(config_select)
@@ -69,7 +69,7 @@ def manage_configs_():
 	return render_template('config_manager.html', files=all_files, current_config=app.config['CURRENT_CONFIG'])
 
 @app.route('/manage_bell', methods=['GET', 'POST'])
-def manage_bell_():
+def manage_bell():
 	if request.method == 'POST':
 		selected = request.form['state']
 		if selected == 'start':
@@ -87,7 +87,7 @@ def manage_bell_():
 	return render_template('bell_manager.html', files=all_files, state=b.running)
 
 @app.route('/play_instant', methods=['POST'])
-def play_instant_():
+def play_instant():
 	sound_select = request.form['sound_select']
 	filename = secure_filename(sound_select)
 	b.play_instant(os.path.join(app.config['SOUND_FOLDER'], filename))

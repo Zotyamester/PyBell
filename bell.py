@@ -66,8 +66,3 @@ def bell_main():
     while running:
         schedule.run_pending()
         time.sleep(1)
-
-if __name__ == '__main__':
-    load_schedule(os.path.join(app.config['CONFIG_FOLDER'], app.config['CURRENT_CONFIG']))
-    running = True
-    bell_main()
