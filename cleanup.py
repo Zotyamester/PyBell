@@ -11,7 +11,7 @@ def list_all_files(dirname):
 	return all_files
 
 for config in list_all_files(app.config['CONFIG_FOLDER']):
-    config = os.path.join('configs', config)
+    config = os.path.join(app.config['CONFIG_FOLDER'], config)
     content = ''
     with open(config, 'r') as f:
         content = f.read()
