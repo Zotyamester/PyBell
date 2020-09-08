@@ -22,6 +22,7 @@ main {
 
 h1 {
     padding-top: 20px;
+    padding-bottom: 20px;
     font-size: 350%;
     color: #eceff4;
 }

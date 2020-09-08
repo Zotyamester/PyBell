@@ -4,9 +4,14 @@ import sys
 import urllib.request
 
 from flask import Flask, flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
+from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 
-from app import app, bell as b
+from app import app
+from app import bell as b
+from app.models import User
+from app.forms import LoginForm
 
 ALLOWED_SOUND_EXTENSIONS = {'mp3', 'wav'}
 ALLOWED_CONFIG_EXTENSIONS = {'xml', 'bellxml'}
@@ -40,22 +45,49 @@ def upload(request, allowed_exts, folder):
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
+@login_required
 def home():
 	return render_template('home.html')
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('home')
+        return redirect(next_page)
+    return render_template('login.html', form=form)
+
+@app.route('/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
 @app.route('/upload_sound', methods=['GET', 'POST'])
+@login_required
 def upload_sound():
 	if request.method == 'POST':
 		return upload(request, ALLOWED_SOUND_EXTENSIONS, 'SOUND_FOLDER')
 	return render_template('uploader.html', filetype='sound', action_url='/upload_sound')
 
 @app.route('/upload_config', methods=['GET', 'POST'])
+@login_required
 def upload_config():
 	if request.method == 'POST':
 		return upload(request, ALLOWED_CONFIG_EXTENSIONS, 'CONFIG_FOLDER')
 	return render_template('uploader.html', filetype='config', action_url='/upload_config')
 
 @app.route('/manage_configs', methods=['GET', 'POST'])
+@login_required
 def manage_configs():
 	if request.method == 'POST':
 		config_select = request.form['config_select']
@@ -68,6 +100,7 @@ def manage_configs():
 	return render_template('config_manager.html', files=all_files, current_config=app.config['CURRENT_CONFIG'])
 
 @app.route('/manage_bell', methods=['GET', 'POST'])
+@login_required
 def manage_bell():
 	if request.method == 'POST':
 		selected = request.form['state']
@@ -86,9 +119,10 @@ def manage_bell():
 	return render_template('bell_manager.html', files=all_files, state=b.running)
 
 @app.route('/play_instant', methods=['POST'])
+@login_required
 def play_instant():
 	sound_select = request.form['sound_select']
 	filename = secure_filename(sound_select)
 	b.play_instant(os.path.join(app.config['SOUND_FOLDER'], filename))
 	flash('Now playing "%s".' % filename)
-	return redirect('/manage_bell')
+	return redirect(url_for('manage_bell'))
