@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Upload {{ filetype }}{% endblock %}
+
+{% block main %}
+	<h2>Select a {{ filetype }}file to upload.</h2>
+	<form method="post" action="{{ action_url }}" enctype="multipart/form-data">
+		<p>
+			<input type="file" name="file" autocomplete="off" required>
+		</p>
+		<p>
+			<input type="submit" value="Ok">
+		</p>
+	</form>
+{% endblock %}

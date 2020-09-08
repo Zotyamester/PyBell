@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Manage bell{% endblock %}
+
+{% block main %}
+	<h2>The bell is currently {{ 'active' if state else 'inactive' }}.</h2>
+	<form method="post" action="/manage_bell" enctype="multipart/form-data">
+		<p>
+			<input type="radio" name="state" value="start">Start</input>
+			<input type="radio" name="state" value="stop">Stop</input>
+			<input type="radio" name="state" value="restart">Restart</input>
+		</p>
+		<p>
+			<input type="submit" value="Ok">
+		</p>
+	</form>
+	<h2>You can also just play a sound directly.</h2>
+	<form method="post" action="/play_instant" enctype="multipart/form-data">
+		<p>
+			<select name="sound_select">
+				{% for filename in files %}
+				<option value="{{ filename }}">{{ filename }}</option>
+				{% endfor %}
+			</select>
+		</p>
+		<p>
+			<input type="submit" value="Ok">
+		</p>
+	</form>
+{% endblock %}

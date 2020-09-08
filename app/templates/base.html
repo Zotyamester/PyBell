@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>PyBell - {% block title %}{% endblock %}</title>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <h1>PyBell</h1>
+        <ul id="nav">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/upload_sound">Upload sound</a></li>
+            <li><a href="/upload_config">Upload config</a></li>
+            <li><a href="/manage_configs">Manage configs</a></li>
+            <li><a href="/manage_bell">Manage bell</a></li>
+        </ul>
+    </header>
+    <p>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </p>
+    <main>
+        {% block main %}{% endblock %}
+    </main>
+</body>
+</html>
