@@ -120,10 +120,12 @@ def manage_bell():
 		elif selected == 'stop':
 			b.bell_stop()
 			flash('Bell stopped')
-		else:
+		elif selected == 'restart':
 			b.bell_stop()
 			b.bell_start()
 			flash('Bell restarted')
+		else:
+			flash('Selection error')
 		return redirect(request.url)
 	all_files = list_all_files(app.config['SOUND_FOLDER'])
 	return render_template('bell_manager.html', files=all_files, state=b.running)
