@@ -10,8 +10,9 @@ from werkzeug.utils import secure_filename
 
 from app import app
 from app import bell as b
-from app.models import User
+from app import db
 from app.forms import LoginForm
+from app.models import User
 
 ALLOWED_SOUND_EXTENSIONS = {'mp3', 'wav'}
 ALLOWED_CONFIG_EXTENSIONS = {'xml', 'bellxml'}
@@ -71,6 +72,15 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+@app.errorhandler(404)
+def not_found_error(error):
+	return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+	db.session.rollback()
+	return render_template('500.html'), 500
 
 @app.route('/upload_sound', methods=['GET', 'POST'])
 @login_required
