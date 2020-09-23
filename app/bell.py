@@ -1,29 +1,24 @@
 import os
 import threading
 import time
-from xml.dom import minidom
 
 import schedule
 from playsound import playsound
 
 from app import app
-
-WEEK_ = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su']
-TIME_ = ['h', 'm', 's']
+from app.bellconfig import BellConfig
 
 th = None
 running = False
 
 def load_schedule(filename):
     schedule.clear()
-    doc = minidom.parse(filename)
-    rings = doc.getElementsByTagName('ring')
-    for ring in rings:
-        soundfile = os.path.join(app.config['SOUND_FOLDER'], ring.getElementsByTagName('media')[0].firstChild.nodeValue)
-        days_node = ring.getElementsByTagName('days')[0]
-        days = {x : (days_node.attributes[x].firstChild.nodeValue == '1') for x in WEEK_}
-        time_nodes = ring.getElementsByTagName('time')
-        times = [{x : int(time_node.attributes[x].firstChild.nodeValue) for x in TIME_} for time_node in time_nodes]
+    config = BellConfig()
+    config.load(filename)
+    for ring in config.rings:
+        soundfile = os.path.join(app.config['SOUND_FOLDER'], ring.soundfile)
+        days = ring.days
+        times = ring.times
         if days['mo']:
             for timestamp in times:
                 schedule.every().monday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
@@ -47,7 +42,6 @@ def load_schedule(filename):
                 schedule.every().sunday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
 
 def play_instant(filename):
-    soundfile = os.path.join(app.config['SOUND_FOLDER'], filename)
     playsound(filename, False)
 
 def bell_start():
