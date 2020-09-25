@@ -2,10 +2,10 @@
 
 {% block header %}
     <ul id="nav">
-        <li><a href="/home">Home</a></li>
-        <li><a href="/upload">Upload</a></li>
-        <li><a href="/manage_configs">Manage configs</a></li>
-        <li><a href="/manage_bell">Manage bell</a></li>
-        <li><a href="/logout">Log Out</a></li>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('upload') }}">Upload</a></li>
+        <li><a href="{{ url_for('manage_configs') }}">Manage configs</a></li>
+        <li><a href="{{ url_for('manage_bell') }}">Manage bell</a></li>
+        <li><a href="{{ url_for('logout') }}">Log Out</a></li>
     </ul>
 {% endblock %}
