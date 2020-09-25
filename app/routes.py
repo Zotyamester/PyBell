@@ -27,10 +27,10 @@ def list_all_files(dirname):
 def allowed_file(filename, allowed_exts):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_exts
 
-def upload(request, allowed_exts, folder):
+def upload_file(request, allowed_exts, folder):
 	if 'file' not in request.files:
 		flash('No file part')
-		return redirect(url_for('uploader'))
+		return redirect(url_for('upload'))
 	file = request.files['file']
 	if file.filename == '':
 		flash('No file selected for uploading')
@@ -40,7 +40,7 @@ def upload(request, allowed_exts, folder):
 		flash('File "%s" uploaded' % filename)
 	else:
 		flash('Allowed file types are %s' % ', '.join(allowed_exts))
-	return redirect(url_for('uploader'))
+	return redirect(url_for('upload'))
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
@@ -79,20 +79,20 @@ def not_found_error(error):
 def internal_error(error):
 	return render_template('500.html'), 500
 
-@app.route('/uploader', methods=['GET'])
+@app.route('/upload', methods=['GET'])
 @login_required
-def uploader():
-	return render_template('uploader.html')
+def upload():
+	return render_template('upload.html')
 
 @app.route('/upload_sound', methods=['POST'])
 @login_required
 def upload_sound():
-	return upload(request, ALLOWED_SOUND_EXTENSIONS, 'SOUND_FOLDER')
+	return upload_file(request, ALLOWED_SOUND_EXTENSIONS, 'SOUND_FOLDER')
 
 @app.route('/upload_config', methods=['POST'])
 @login_required
 def upload_config():
-	return upload(request, ALLOWED_CONFIG_EXTENSIONS, 'CONFIG_FOLDER')
+	return upload_file(request, ALLOWED_CONFIG_EXTENSIONS, 'CONFIG_FOLDER')
 
 @app.route('/manage_configs', methods=['GET', 'POST'])
 @login_required
