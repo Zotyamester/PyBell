@@ -30,19 +30,17 @@ def allowed_file(filename, allowed_exts):
 def upload(request, allowed_exts, folder):
 	if 'file' not in request.files:
 		flash('No file part')
-		return redirect(request.url)
+		return redirect(url_for('uploader'))
 	file = request.files['file']
 	if file.filename == '':
 		flash('No file selected for uploading')
-		return redirect(request.url)
-	if file and allowed_file(file.filename, allowed_exts):
+	elif file and allowed_file(file.filename, allowed_exts):
 		filename = secure_filename(file.filename)
 		file.save(os.path.join(app.config[folder], filename))
-		flash('File uploaded')
-		return redirect(request.url)
+		flash('File "%s" uploaded' % filename)
 	else:
-		flash('Allowed file types are {}'.format(', '.join(allowed_exts)))
-		return redirect(request.url)
+		flash('Allowed file types are %s' % ', '.join(allowed_exts))
+	return redirect(url_for('uploader'))
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
@@ -82,19 +80,20 @@ def internal_error(error):
 	db.session.rollback()
 	return render_template('500.html'), 500
 
-@app.route('/upload_sound', methods=['GET', 'POST'])
+@app.route('/uploader', methods=['GET'])
+@login_required
+def uploader():
+	return render_template('uploader.html')
+
+@app.route('/upload_sound', methods=['POST'])
 @login_required
 def upload_sound():
-	if request.method == 'POST':
-		return upload(request, ALLOWED_SOUND_EXTENSIONS, 'SOUND_FOLDER')
-	return render_template('uploader.html', filetype='sound', action_url='/upload_sound')
+	return upload(request, ALLOWED_SOUND_EXTENSIONS, 'SOUND_FOLDER')
 
-@app.route('/upload_config', methods=['GET', 'POST'])
+@app.route('/upload_config', methods=['POST'])
 @login_required
 def upload_config():
-	if request.method == 'POST':
-		return upload(request, ALLOWED_CONFIG_EXTENSIONS, 'CONFIG_FOLDER')
-	return render_template('uploader.html', filetype='config', action_url='/upload_config')
+	return upload(request, ALLOWED_CONFIG_EXTENSIONS, 'CONFIG_FOLDER')
 
 @app.route('/manage_configs', methods=['GET', 'POST'])
 @login_required
