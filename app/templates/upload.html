@@ -4,20 +4,22 @@
 {% block main %}
 	<h2>Select a soundfile to upload.</h2>
 	<form method="post" action="/upload_sound" enctype="multipart/form-data">
+        {{ form1.hidden_tag() }}
 		<p>
-			<input type="file" name="file" autocomplete="off" required>
+			{{ form1.file() }}
 		</p>
 		<p>
-			<input type="submit" value="Upload">
+			{{ form1.submit() }}
 		</p>
 	</form>
 	<h2>Select a configfile to upload.</h2>
 	<form method="post" action="/upload_config" enctype="multipart/form-data">
+        {{ form2.hidden_tag() }}
 		<p>
-			<input type="file" name="file" autocomplete="off" required>
+			{{ form2.file() }}
 		</p>
 		<p>
-			<input type="submit" value="Upload">
+			{{ form2.submit() }}
 		</p>
 	</form>
 {% endblock %}

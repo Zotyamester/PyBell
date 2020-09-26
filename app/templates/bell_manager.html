@@ -3,27 +3,26 @@
 
 {% block main %}
 	<h2>The bell is currently {{ 'active' if state else 'inactive' }}.</h2>
-	<form method="post" action="/manage_bell" enctype="multipart/form-data">
+	<form method="post" action="/manage_scheduler" enctype="multipart/form-data">
+        {{ form1.hidden_tag() }}
 		<p>
-			<input type="radio" name="state" value="start">Start</input>
-			<input type="radio" name="state" value="stop">Stop</input>
-			<input type="radio" name="state" value="restart">Restart</input>
+			{% for option in form1.state %}
+				{{ option() }}
+				{{ option.label }}
+			{% endfor %}
 		</p>
 		<p>
-			<input type="submit" value="Ok">
+			{{ form1.submit() }}
 		</p>
 	</form>
 	<h2>You can also just play a sound directly.</h2>
 	<form method="post" action="/play_instant" enctype="multipart/form-data">
+        {{ form2.hidden_tag() }}
 		<p>
-			<select name="sound_select">
-				{% for filename in files %}
-					<option value="{{ filename }}">{{ filename }}</option>
-				{% endfor %}
-			</select>
+			{{ form2.sound() }}
 		</p>
 		<p>
-			<input type="submit" value="Ok">
+			{{ form2.submit() }}
 		</p>
 	</form>
 {% endblock %}

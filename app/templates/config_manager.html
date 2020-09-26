@@ -4,15 +4,12 @@
 {% block main %}
 	<h2>Current config: "{{ current_config }}".</h2>
 	<form method="post" action="/manage_configs" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
 		<p>
-			<select name="config_select">
-				{% for filename in files %}
-					<option value="{{ filename }}">{{ filename }}</option>
-				{% endfor %}
-			</select>
+			{{ form.config() }}
 		</p>
 		<p>
-			<input type="submit" name="action" value="Select">
+			{{ form.submit() }}
 		</p>
 	</form>
 {% endblock %}
