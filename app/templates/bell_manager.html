@@ -3,7 +3,7 @@
 
 {% block main %}
 	<h2>The bell is currently {{ 'active' if state else 'inactive' }}.</h2>
-	<form method="post" action="/manage_scheduler" enctype="multipart/form-data">
+	<form method="post" action="{{ url_for('manage_scheduler') }}" enctype="multipart/form-data">
         {{ form1.hidden_tag() }}
 		<p>
 			{% for option in form1.state %}
@@ -16,7 +16,7 @@
 		</p>
 	</form>
 	<h2>You can also just play a sound directly.</h2>
-	<form method="post" action="/play_instant" enctype="multipart/form-data">
+	<form method="post" action="{{ url_for('play_instant') }}" enctype="multipart/form-data">
         {{ form2.hidden_tag() }}
 		<p>
 			{{ form2.sound() }}

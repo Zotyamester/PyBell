@@ -3,7 +3,7 @@
 
 {% block main %}
 	<h2>Select a soundfile to upload.</h2>
-	<form method="post" action="/upload_sound" enctype="multipart/form-data">
+	<form method="post" action="{{ url_for('upload_sound') }}" enctype="multipart/form-data">
         {{ form1.hidden_tag() }}
 		<p>
 			{{ form1.file() }}
@@ -13,7 +13,7 @@
 		</p>
 	</form>
 	<h2>Select a configfile to upload.</h2>
-	<form method="post" action="/upload_config" enctype="multipart/form-data">
+	<form method="post" action="{{ url_for('upload_config') }}" enctype="multipart/form-data">
         {{ form2.hidden_tag() }}
 		<p>
 			{{ form2.file() }}

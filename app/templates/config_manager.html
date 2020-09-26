@@ -3,7 +3,7 @@
 
 {% block main %}
 	<h2>Current config: "{{ current_config }}".</h2>
-	<form method="post" action="/manage_configs" enctype="multipart/form-data">
+	<form method="post" action="{{ url_for('manage_configs') }}" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
 		<p>
 			{{ form.config() }}

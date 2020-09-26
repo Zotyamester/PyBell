@@ -3,15 +3,15 @@
 
 {% block main %}
 	<h2>Log In</h2>
-    <form method="post" action="/login" enctype="multipart/form-data">
+    <form method="post" action="{{ url_for('login') }}" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <p>
             {{ form.username.label }}<br>
-            {{ form.username(size=32) }}
+            {{ form.username(size=30) }}
         </p>
         <p>
             {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
+            {{ form.password(size=30) }}
         </p>
         <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
         <p>{{ form.submit() }}</p>
