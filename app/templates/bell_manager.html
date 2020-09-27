@@ -1,7 +1,7 @@
 {% extends "base_after_login.html" %}
 {% block title %}Manage bell{% endblock %}
 
-{% block main %}
+{% block content %}
 	<h2>The bell is currently {{ 'active' if state else 'inactive' }}.</h2>
 	<form method="post" action="{{ url_for('manage_scheduler') }}" enctype="multipart/form-data">
         {{ form1.hidden_tag() }}

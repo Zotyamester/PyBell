@@ -15,6 +15,11 @@ from app.forms import (BellManagerForm, ConfigManagerForm, ConfigUploadForm,
                        LoginForm, PlayInstantForm, SoundUploadForm)
 from app.models import User
 
+def flash_info(message):
+	flash(message, 'info')
+
+def flash_error(message):
+	flash(message, 'error')
 
 def list_all_files(dirname):
 	all_files = []
@@ -27,10 +32,10 @@ def upload_file(form, folder):
 	if form.validate_on_submit():
 		filename = secure_filename(form.file.data.filename)
 		form.file.data.save(os.path.join(app.config[folder], filename))
-		flash('File "%s" uploaded' % filename)
+		flash_info('File "%s" uploaded' % filename)
 	else:
 		for error in form.file.errors:
-			flash(error)
+			flash_error(error)
 	return redirect(url_for('upload'))
 
 @app.route('/', methods=['GET', 'POST'])
@@ -47,7 +52,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
+            flash_error('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
@@ -75,7 +80,7 @@ def internal_error(error):
 def upload():
 	form1 = SoundUploadForm()
 	form2 = ConfigUploadForm()
-	return render_template('upload.html', form1=form1, form2=form2)
+	return render_template('uploader.html', form1=form1, form2=form2)
 
 @app.route('/upload_sound', methods=['POST'])
 @login_required
@@ -97,7 +102,7 @@ def manage_configs():
 		filename = secure_filename(form.config.data)
 		app.config['CURRENT_CONFIG'] = filename
 		b.load_schedule(os.path.join(app.config['CONFIG_FOLDER'], app.config['CURRENT_CONFIG']))
-		flash('Config updated')
+		flash_info('Config updated')
 		return redirect(request.url)
 	form.config.choices = list_all_files(app.config['CONFIG_FOLDER'])
 	return render_template('config_manager.html', form=form, current_config=app.config['CURRENT_CONFIG'])
@@ -117,16 +122,16 @@ def manage_scheduler():
 	selected = form.state.data
 	if selected == 'Start':
 		b.bell_start()
-		flash('Bell started')
+		flash_info('Bell started')
 	elif selected == 'Stop':
 		b.bell_stop()
-		flash('Bell stopped')
+		flash_info('Bell stopped')
 	elif selected == 'Restart':
 		b.bell_stop()
 		b.bell_start()
-		flash('Bell restarted')
+		flash_info('Bell restarted')
 	else:
-		flash('Selection error')
+		flash_error('Selection error')
 	return redirect(url_for('manage_bell'))
 
 @app.route('/play_instant', methods=['POST'])
@@ -135,5 +140,5 @@ def play_instant():
 	form = PlayInstantForm()
 	filename = secure_filename(form.sound.data)
 	b.play_instant(os.path.join(app.config['SOUND_FOLDER'], filename))
-	flash('Now playing "%s".' % filename)
+	flash_info('Now playing "%s".' % filename)
 	return redirect(url_for('manage_bell'))

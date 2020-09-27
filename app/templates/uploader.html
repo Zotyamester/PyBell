@@ -1,7 +1,7 @@
 {% extends "base_after_login.html" %}
 {% block title %}Upload{% endblock %}
 
-{% block main %}
+{% block content %}
 	<h2>Select a soundfile to upload.</h2>
 	<form method="post" action="{{ url_for('upload_sound') }}" enctype="multipart/form-data">
         {{ form1.hidden_tag() }}

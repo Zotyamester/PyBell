@@ -12,6 +12,13 @@ header {
     background-color: #81a1c1;
 }
 
+h1 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 350%;
+    color: #eceff4;
+}
+
 main {
     border: hidden;
     border-radius: 5px;
@@ -20,10 +27,15 @@ main {
     background-color: #eceff4;
 }
 
-h1 {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    font-size: 350%;
+.flash-info {
+    padding: 8px;
+    background-color: #a3be8c;
+    color: #eceff4;
+}
+
+.flash-error {
+    padding: 8px;
+    background-color: #bf616a;
     color: #eceff4;
 }
 
@@ -88,4 +100,18 @@ select {
 p a, p a:link, p a:visited, p a:hover, p a:active {
     color: #2e3440;
     font-style: italic;
+}
+
+aside {
+    float: right;
+    text-align: left;
+}
+
+pre.bash {
+    background-color: black;
+    color: white;
+    font-size: medium; 
+    font-family: Consolas;
+    width: 100%;
+    display: inline-block;
 }

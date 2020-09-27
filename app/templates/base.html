@@ -12,19 +12,20 @@
         <h1>PyBell</h1>
         {% block header %}{% endblock %}
     </header>
-    <p>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
-    </p>
-    <main>
-        {% block main %}{% endblock %}
+    <main role="main">
+        <article>
+            <section id="flashes">
+                {% for category, message in get_flashed_messages(with_categories=True) %}
+                    <div class="flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </section>
+            <section id="content">
+                {% block content %}{% endblock %}
+            </section>
+        </article>
+        <aside>
+            {% block aside %}{% endblock %}
+        </aside>
     </main>
 </body>
 </html>
