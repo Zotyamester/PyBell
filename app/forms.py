@@ -28,8 +28,8 @@ class ConfigManagerForm(FlaskForm):
     submit = SubmitField('Select')
 
     def __init__(self, *args, **kwargs):
-         super(ConfigManagerForm, self).__init__(*args, **kwargs)
-         self.config.choices = kwargs['choices'].copy()
+        super(ConfigManagerForm, self).__init__(*args, **kwargs)
+        self.config.choices = kwargs['choices'].copy()
 
 class BellManagerForm(FlaskForm):
     state = RadioField('State', choices=['Start', 'Stop', 'Restart'], validators=[InputRequired()])
@@ -40,5 +40,5 @@ class PlayInstantForm(FlaskForm):
     submit = SubmitField('Play')
 
     def __init__(self, *args, **kwargs):
-         super(PlayInstantForm, self).__init__(*args, **kwargs)
-         self.sound.choices = kwargs['choices'].copy()
+        super(PlayInstantForm, self).__init__(*args, **kwargs)
+        self.sound.choices = kwargs['choices'].copy()

@@ -16,138 +16,138 @@ from app.forms import (BellManagerForm, ConfigManagerForm, ConfigUploadForm,
 from app.models import User
 
 def flash_info(message):
-	flash(message, 'info')
+    flash(message, 'info')
 
 def flash_error(message):
-	flash(message, 'error')
+    flash(message, 'error')
 
 def flash_form_errors(form):
-	for _, errors in form.errors.items():
-		for error in errors:
-			flash_error('%s' % error)
+    for _, errors in form.errors.items():
+        for error in errors:
+            flash_error('%s' % error)
 
 def list_all_files(dirname):
-	all_files = []
-	for _, _, files in os.walk(dirname):
-		for filename in files:
-			all_files.append(filename)
-	return all_files
+    all_files = []
+    for _, _, files in os.walk(dirname):
+        for filename in files:
+            all_files.append(filename)
+    return all_files
 
 def upload_file(form, folder):
-	if form.validate_on_submit():
-		filename = secure_filename(form.file.data.filename)
-		form.file.data.save(os.path.join(app.config[folder], filename))
-		flash_info('File "%s" uploaded' % filename)
-	else:
-		flash_form_errors(form)
-	return redirect(url_for('upload'))
+    if form.validate_on_submit():
+        filename = secure_filename(form.file.data.filename)
+        form.file.data.save(os.path.join(app.config[folder], filename))
+        flash_info('File "%s" uploaded' % filename)
+    else:
+        flash_form_errors(form)
+    return redirect(url_for('upload'))
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
-	return render_template('home.html')
+    return render_template('home.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-	if current_user.is_authenticated:
-		return redirect(url_for('home'))
-	form = LoginForm()
-	if form.validate_on_submit():
-		user = User.query.filter_by(username=form.username.data).first()
-		if user is None or not user.check_password(form.password.data):
-			flash_error('Invalid username or password')
-			return redirect(url_for('login'))
-		login_user(user, remember=form.remember_me.data)
-		next_page = request.args.get('next')
-		if not next_page or url_parse(next_page).netloc != '':
-			next_page = url_for('home')
-		return redirect(next_page)
-	else:
-		flash_form_errors(form)
-	return render_template('login.html', form=form)
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash_error('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('home')
+        return redirect(next_page)
+    else:
+        flash_form_errors(form)
+    return render_template('login.html', form=form)
 
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
-	logout_user()
-	return redirect(url_for('login'))
+    logout_user()
+    return redirect(url_for('login'))
 
 @app.errorhandler(404)
 def not_found_error(error):
-	return render_template('404.html'), 404
+    return render_template('404.html'), 404
 
 @app.errorhandler(500)
 def internal_error(error):
-	return render_template('500.html'), 500
+    return render_template('500.html'), 500
 
 @app.route('/upload', methods=['GET'])
 @login_required
 def upload():
-	form1 = SoundUploadForm()
-	form2 = ConfigUploadForm()
-	return render_template('uploader.html', form1=form1, form2=form2)
+    form1 = SoundUploadForm()
+    form2 = ConfigUploadForm()
+    return render_template('uploader.html', form1=form1, form2=form2)
 
 @app.route('/upload_sound', methods=['POST'])
 @login_required
 def upload_sound():
-	form = SoundUploadForm()
-	return upload_file(form, 'SOUND_FOLDER')
+    form = SoundUploadForm()
+    return upload_file(form, 'SOUND_FOLDER')
 
 @app.route('/upload_config', methods=['POST'])
 @login_required
 def upload_config():
-	form = ConfigUploadForm()
-	return upload_file(form, 'CONFIG_FOLDER')
+    form = ConfigUploadForm()
+    return upload_file(form, 'CONFIG_FOLDER')
 
 @app.route('/manage_configs', methods=['GET', 'POST'])
 @login_required
 def manage_configs():
-	form = ConfigManagerForm(choices=list_all_files(app.config['CONFIG_FOLDER']))
-	if form.validate_on_submit():
-		filename = secure_filename(form.config.data)
-		app.config['CURRENT_CONFIG'] = filename
-		b.load_schedule(os.path.join(app.config['CONFIG_FOLDER'], app.config['CURRENT_CONFIG']))
-		flash_info('Config updated')
-	else:
-		flash_form_errors(form)
-	return render_template('config_manager.html', form=form, current_config=app.config['CURRENT_CONFIG'])
+    form = ConfigManagerForm(choices=list_all_files(app.config['CONFIG_FOLDER']))
+    if form.validate_on_submit():
+        filename = secure_filename(form.config.data)
+        app.config['CURRENT_CONFIG'] = filename
+        b.load_schedule(os.path.join(app.config['CONFIG_FOLDER'], app.config['CURRENT_CONFIG']))
+        flash_info('Config updated')
+    else:
+        flash_form_errors(form)
+    return render_template('config_manager.html', form=form, current_config=app.config['CURRENT_CONFIG'])
 
 @app.route('/manage_bell', methods=['GET'])
 @login_required
 def manage_bell():
-	form1 = BellManagerForm()
-	form2 = PlayInstantForm(choices=list_all_files(app.config['SOUND_FOLDER']))
-	return render_template('bell_manager.html', form1=form1, form2=form2, state=b.running)
+    form1 = BellManagerForm()
+    form2 = PlayInstantForm(choices=list_all_files(app.config['SOUND_FOLDER']))
+    return render_template('bell_manager.html', form1=form1, form2=form2, state=b.running)
 
 @app.route('/manage_scheduler', methods=['POST'])
 @login_required
 def manage_scheduler():
-	form = BellManagerForm()
-	if form.validate_on_submit():
-		selected = form.state.data
-		if selected == 'Start':
-			b.bell_start()
-			flash_info('Bell started')
-		elif selected == 'Stop':
-			b.bell_stop()
-			flash_info('Bell stopped')
-		else:
-			b.bell_stop()
-			b.bell_start()
-			flash_info('Bell restarted')
-	else:
-		flash_form_errors(form)
-	return redirect(url_for('manage_bell'))
+    form = BellManagerForm()
+    if form.validate_on_submit():
+        selected = form.state.data
+        if selected == 'Start':
+            b.bell_start()
+            flash_info('Bell started')
+        elif selected == 'Stop':
+            b.bell_stop()
+            flash_info('Bell stopped')
+        else:
+            b.bell_stop()
+            b.bell_start()
+            flash_info('Bell restarted')
+    else:
+        flash_form_errors(form)
+    return redirect(url_for('manage_bell'))
 
 @app.route('/play_instant', methods=['POST'])
 @login_required
 def play_instant():
-	form = PlayInstantForm(choices=list_all_files(app.config['SOUND_FOLDER']))
-	if form.validate_on_submit():
-		filename = secure_filename(form.sound.data)
-		b.play_instant(os.path.join(app.config['SOUND_FOLDER'], filename))
-		flash_info('Now playing "%s".' % filename)
-	else:
-		flash_form_errors(form)
-	return redirect(url_for('manage_bell'))
+    form = PlayInstantForm(choices=list_all_files(app.config['SOUND_FOLDER']))
+    if form.validate_on_submit():
+        filename = secure_filename(form.sound.data)
+        b.play_instant(os.path.join(app.config['SOUND_FOLDER'], filename))
+        flash_info('Now playing "%s".' % filename)
+    else:
+        flash_form_errors(form)
+    return redirect(url_for('manage_bell'))

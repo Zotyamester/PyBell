@@ -2,7 +2,7 @@
 {% block title %}Log In{% endblock %}
 
 {% block content %}
-	<h2>Log In</h2>
+    <h2>Log In</h2>
     <form method="post" action="{{ url_for('login') }}" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <p>
