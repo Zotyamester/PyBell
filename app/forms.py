@@ -4,8 +4,8 @@ from wtforms import (BooleanField, FileField, PasswordField, RadioField,
                      SelectField, StringField, SubmitField)
 from wtforms.validators import DataRequired, InputRequired
 
-ALLOWED_SOUND_EXTENSIONS = ['mp3', 'wav']
-ALLOWED_CONFIG_EXTENSIONS = ['xml', 'bellxml']
+ALLOWED_SOUND_EXTENSIONS = ['wav']
+ALLOWED_CONFIG_EXTENSIONS = ['xml']
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])

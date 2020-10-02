@@ -2,17 +2,21 @@ import os
 import threading
 import time
 
-import schedule
-from playsound import playsound
+import schedule as sch
+from simpleaudio import WaveObject
 
 from app import app
 from app.bellconfig import BellConfig
+
+
+def play_sound(filename):
+    WaveObject.from_wave_file(filename).play()
 
 th = None
 running = False
 
 def load_schedule(filename):
-    schedule.clear()
+    sch.clear()
     config = BellConfig()
     config.load(filename)
     for ring in config.rings:
@@ -21,28 +25,25 @@ def load_schedule(filename):
         times = ring.times
         if days['mo']:
             for timestamp in times:
-                schedule.every().monday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
+                sch.every().monday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(play_sound, soundfile)
         if days['tu']:
             for timestamp in times:
-                schedule.every().tuesday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
+                sch.every().tuesday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(play_sound, soundfile)
         if days['we']:
             for timestamp in times:
-                schedule.every().wednesday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
+                sch.every().wednesday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(play_sound, soundfile)
         if days['th']:
             for timestamp in times:
-                schedule.every().thursday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
+                sch.every().thursday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(play_sound, soundfile)
         if days['fr']:
             for timestamp in times:
-                schedule.every().friday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
+                sch.every().friday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(play_sound, soundfile)
         if days['sa']:
             for timestamp in times:
-                schedule.every().saturday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
+                sch.every().saturday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(play_sound, soundfile)
         if days['su']:
             for timestamp in times:
-                schedule.every().sunday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(playsound, soundfile, False)
-
-def play_instant(filename):
-    playsound(filename, False)
+                sch.every().sunday.at('{:02d}:{:02d}:{:02d}'.format(timestamp['h'], timestamp['m'], timestamp['s'])).do(play_sound, soundfile)
 
 def bell_start():
     global running, th
@@ -58,5 +59,8 @@ def bell_stop():
 
 def bell_main():
     while running:
-        schedule.run_pending()
+        sch.run_pending()
         time.sleep(1)
+
+def play_instant(filename):
+    play_sound(filename)
