@@ -26,12 +26,10 @@ main {
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: #eceff4;
-    padding: 5% 5%;
 }
 
-.content {
-    padding-left: 10px;
-    padding-right: 10px;
+#content {
+    padding: 2.5% 5%;
 }
 
 .flash-info {
