@@ -12,8 +12,9 @@ from app import app
 from app import bell as b
 from app import db
 from app.forms import (BellManagerForm, ConfigManagerForm, ConfigUploadForm,
-                       LoginForm, PlayInstantForm, SoundUploadForm)
+                       LoginForm, PlayInstantForm, SoundUploadForm, FileManagerForm)
 from app.models import User
+
 
 def flash_info(message):
     flash(message, 'info')
@@ -32,6 +33,12 @@ def list_all_files(dirname):
         for filename in files:
             all_files.append(filename)
     return all_files
+
+def list_sound_files():
+    return list_all_files(app.config['SOUND_FOLDER'])
+
+def list_config_files():
+    return list_all_files(app.config['CONFIG_FOLDER'])
 
 def upload_file(form, folder):
     if form.validate_on_submit():
@@ -84,15 +91,54 @@ def internal_error(error):
 @app.route('/upload', methods=['GET'])
 @login_required
 def upload():
-    form1 = SoundUploadForm()
-    form2 = ConfigUploadForm()
-    return render_template('uploader.html', form1=form1, form2=form2)
+    form1 = FileManagerForm(files=[{'name': name} for name in list_sound_files()])
+    form2 = SoundUploadForm()
+    form3 = FileManagerForm(files=[{'name': name} for name in list_config_files()])
+    form4 = ConfigUploadForm()
+    return render_template('uploader.html', \
+        form1=form1, form2=form2, form3=form3, form4=form4)
+
+@app.route('/manage_sound_uploads', methods=['POST'])
+@login_required
+def manage_sound_uploads():
+    form = FileManagerForm(files=[{'name': name} for name in list_sound_files()])
+    if form.validate_on_submit():
+        for file in form.files:
+            if file.remove.data:
+                name = file.data['name']
+                filename = os.path.join(app.config['SOUND_FOLDER'], name)
+                if os.path.exists(filename):
+                    os.remove(filename)
+                    flash_info('File "%s" removed' % name)
+                else:
+                    flash_error('File "%s" does not exist' % name)
+    else:
+        flash_form_errors(form)
+    return redirect(url_for('upload'))
 
 @app.route('/upload_sound', methods=['POST'])
 @login_required
 def upload_sound():
     form = SoundUploadForm()
     return upload_file(form, 'SOUND_FOLDER')
+
+@app.route('/manage_config_uploads', methods=['POST'])
+@login_required
+def manage_config_uploads():
+    form = FileManagerForm(files=[{'name': name} for name in list_config_files()])
+    if form.validate_on_submit():
+        for file in form.files:
+            if file.remove.data:
+                name = file.data['name']
+                filename = os.path.join(app.config['CONFIG_FOLDER'], name)
+                if os.path.exists(filename):
+                    os.remove(filename)
+                    flash_info('File "%s" removed' % name)
+                else:
+                    flash_error('File "%s" does not exist' % name)
+    else:
+        flash_form_errors(form)
+    return redirect(url_for('upload'))
 
 @app.route('/upload_config', methods=['POST'])
 @login_required
@@ -103,7 +149,7 @@ def upload_config():
 @app.route('/manage_configs', methods=['GET', 'POST'])
 @login_required
 def manage_configs():
-    form = ConfigManagerForm(choices=list_all_files(app.config['CONFIG_FOLDER']))
+    form = ConfigManagerForm(choices=list_config_files())
     if form.validate_on_submit():
         filename = secure_filename(form.config.data)
         app.config['CURRENT_CONFIG'] = filename
@@ -117,7 +163,7 @@ def manage_configs():
 @login_required
 def manage_bell():
     form1 = BellManagerForm()
-    form2 = PlayInstantForm(choices=list_all_files(app.config['SOUND_FOLDER']))
+    form2 = PlayInstantForm(choices=list_sound_files())
     return render_template('bell_manager.html', form1=form1, form2=form2, state=b.running)
 
 @app.route('/manage_scheduler', methods=['POST'])
@@ -143,7 +189,7 @@ def manage_scheduler():
 @app.route('/play_instant', methods=['POST'])
 @login_required
 def play_instant():
-    form = PlayInstantForm(choices=list_all_files(app.config['SOUND_FOLDER']))
+    form = PlayInstantForm(choices=list_sound_files())
     if form.validate_on_submit():
         filename = secure_filename(form.sound.data)
         b.play_instant(os.path.join(app.config['SOUND_FOLDER'], filename))

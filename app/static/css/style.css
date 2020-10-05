@@ -3,6 +3,7 @@ body {
     color: #2e3440;
     font-family: sans-serif;
     text-align: center;
+    margin: 1% 1%;
 }
 
 header {
@@ -25,6 +26,12 @@ main {
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: #eceff4;
+    padding: 5% 5%;
+}
+
+.content {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .flash-info {
@@ -83,6 +90,10 @@ input {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+
+input:hover {
+    background-color: #3b4252;
 }
 
 select {

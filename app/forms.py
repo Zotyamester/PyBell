@@ -1,8 +1,9 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileRequired
-from wtforms import (BooleanField, FileField, PasswordField, RadioField,
-                     SelectField, StringField, SubmitField)
-from wtforms.validators import InputRequired
+from wtforms import (BooleanField, FieldList, FileField, Form, FormField,
+                     HiddenField, PasswordField, RadioField, SelectField,
+                     StringField, SubmitField, Label)
+from wtforms.validators import InputRequired, ValidationError
 
 ALLOWED_SOUND_EXTENSIONS = ['wav']
 ALLOWED_CONFIG_EXTENSIONS = ['xml']
@@ -12,6 +13,13 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[InputRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Log In')
+
+class UploadedFileForm(Form):
+    name = HiddenField('Name')
+    remove = SubmitField('Remove')
+
+class FileManagerForm(FlaskForm):
+    files = FieldList(FormField(UploadedFileForm))
 
 class SoundUploadForm(FlaskForm):
     file = FileField('Sound', validators=[FileRequired('No soundfile selected for uploading'), \

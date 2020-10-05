@@ -2,24 +2,71 @@
 {% block title %}Upload{% endblock %}
 
 {% block content %}
-    <h2>Select a soundfile to upload.</h2>
-    <form method="post" action="{{ url_for('upload_sound') }}" enctype="multipart/form-data">
-        {{ form1.hidden_tag() }}
-        <p>
-            {{ form1.file() }}
-        </p>
-        <p>
-            {{ form1.submit() }}
-        </p>
-    </form>
-    <h2>Select a configfile to upload.</h2>
-    <form method="post" action="{{ url_for('upload_config') }}" enctype="multipart/form-data">
-        {{ form2.hidden_tag() }}
-        <p>
-            {{ form2.file() }}
-        </p>
-        <p>
-            {{ form2.submit() }}
-        </p>
-    </form>
+    <div style="float: left; padding-left: 7.5%;">
+        <h2>Select a soundfile to upload.</h2>
+        <div style="height: 200px;">
+            <form method="post" action="{{ url_for('upload_sound') }}" enctype="multipart/form-data">
+                {{ form2.hidden_tag() }}
+                <p>
+                    {{ form2.file() }}
+                </p>
+                <p>
+                    {{ form2.submit() }}
+                </p>
+            </form>
+        </div>
+        <h2>Select a configfile to upload.</h2>
+        <div style="height: 200px;">
+            <form method="post" action="{{ url_for('upload_config') }}" enctype="multipart/form-data">
+                {{ form4.hidden_tag() }}
+                <p>
+                    {{ form4.file() }}
+                </p>
+                <p>
+                    {{ form4.submit() }}
+                </p>
+            </form>
+        </div>
+    </div>
+    <div style="float: right; padding-right: 7.5%;">
+        <h2>Uploaded soundfiles:</h2>
+        <form method="post" action="{{ url_for('manage_sound_uploads') }}" enctype="multipart/form-data">
+            {{ form1.hidden_tag() }}
+            <div style="height: 200px; overflow-y: scroll;">
+                <table>
+                    {% for file in form1.files %}
+                        <tr>
+                            <td>
+                                {{ file.form.name() }}
+                                {{ file.form.name.data }}
+                            </td>
+                            <td>
+                                {{ file.form.remove() }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </form>
+        <h2>Uploaded configfiles:</h2>
+        <form method="post" action="{{ url_for('manage_config_uploads') }}" enctype="multipart/form-data">
+            {{ form3.hidden_tag() }}
+            <div style="height: 200px; overflow-y: scroll;">
+                <table>
+                    {% for file in form3.files %}
+                        <tr>
+                            <td>
+                                {{ file.form.name() }}
+                                {{ file.form.name.data }}
+                            </td>
+                            <td>
+                                {{ file.form.remove() }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </form>
+    </div>
+    <div style="clear: both;"></div>
 {% endblock %}
