@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<bell>
+  <ring>
+    <media>csengo_be.wav</media>
+    <days mo="1" tu="1" we="0" th="1" fr="1" sa="0" su="0" />
+    <time h="7" m="45" s="0" />
+    <time h="8" m="0" s="0" />
+    <time h="9" m="0" s="0" />
+    <time h="10" m="0" s="0" />
+    <time h="11" m="0" s="0" />
+    <time h="11" m="55" s="0" />
+    <time h="12" m="50" s="0" />
+    <time h="14" m="0" s="0" />
+  </ring>
+  <ring>
+    <media>csengo_ki.wav</media>
+    <days mo="1" tu="1" we="0" th="1" fr="0" sa="0" su="0" />
+    <time h="8" m="45" s="0" />
+    <time h="9" m="45" s="0" />
+    <time h="10" m="45" s="0" />
+    <time h="11" m="45" s="0" />
+    <time h="12" m="40" s="0" />
+    <time h="13" m="35" s="0" />
+    <time h="14" m="45" s="0" />
+  </ring>
+  <ring>
+    <media>csengo_ki.wav</media>
+    <days mo="0" tu="0" we="0" th="0" fr="1" sa="0" su="0" />
+    <time h="8" m="45" s="0" />
+    <time h="9" m="45" s="0" />
+    <time h="10" m="45" s="0" />
+    <time h="11" m="45" s="0" />
+  </ring>
+  <ring>
+    <media>halleluja.wav</media>
+    <days mo="0" tu="0" we="0" th="0" fr="1" sa="0" su="0" />
+    <time h="12" m="40" s="0" />
+    <time h="13" m="35" s="0" />
+    <time h="14" m="45" s="0" />
+  </ring>
+  <ring>
+    <media>madar.wav</media>
+    <days mo="0" tu="0" we="1" th="0" fr="0" sa="0" su="0" />
+    <time h="7" m="45" s="0" />
+    <time h="8" m="0" s="0" />
+    <time h="8" m="45" s="0" />      
+    <time h="9" m="0" s="0" />
+    <time h="9" m="45" s="0" />      
+    <time h="10" m="0" s="0" />
+    <time h="10" m="45" s="0" />      
+    <time h="11" m="0" s="0" />
+    <time h="11" m="45" s="0" />
+    <time h="11" m="55" s="0" />
+    <time h="12" m="40" s="0" />      
+    <time h="12" m="50" s="0" />
+    <time h="13" m="35" s="0" />      
+    <time h="14" m="0" s="0" />
+    <time h="14" m="45" s="0" />
+  </ring>
+  <ring>
+    <media>jelzokakukk.wav</media>
+    <days mo="1" tu="1" we="1" th="1" fr="1" sa="0" su="0" />
+    <time h="7" m="59" s="0" />
+    <time h="8" m="59" s="0" />
+    <time h="9" m="59" s="0" />
+    <time h="10" m="59" s="0" />
+    <time h="11" m="54" s="0" />
+    <time h="12" m="49" s="0" />
+    <time h="13" m="59" s="0" />
+  </ring>
+  <ring>
+    <media>keremvigyazzanak.wav</media>
+    <days mo="1" tu="1" we="1" th="1" fr="1" sa="0" su="0" />
+    <time h="7" m="55" s="0" />
+  </ring>
+  <ring>
+    <media>sorakozo.wav</media>
+    <days mo="1" tu="1" we="1" th="1" fr="1" sa="0" su="0" />
+    <time h="9" m="58" s="0" />
+    <time h="10" m="58" s="0" />
+    <time h="11" m="53" s="0" />
+    <time h="12" m="48" s="0" />
+  </ring>
+</bell>
