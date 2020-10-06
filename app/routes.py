@@ -40,15 +40,6 @@ def list_sound_files():
 def list_config_files():
     return list_all_files(app.config['CONFIG_FOLDER'])
 
-def upload_file(form, folder):
-    if form.validate_on_submit():
-        filename = secure_filename(form.file.data.filename)
-        form.file.data.save(os.path.join(app.config[folder], filename))
-        flash_info('File "%s" uploaded' % filename)
-    else:
-        flash_form_errors(form)
-    return redirect(url_for('upload'))
-
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
@@ -91,27 +82,18 @@ def internal_error(error):
 @app.route('/upload', methods=['GET'])
 @login_required
 def upload():
-    form1 = FileManagerForm(files=[{'name': name} for name in list_sound_files()])
-    form2 = SoundUploadForm()
-    form3 = FileManagerForm(files=[{'name': name} for name in list_config_files()])
-    form4 = ConfigUploadForm()
+    form1 = SoundUploadForm()
+    form2 = ConfigUploadForm()
+    form3 = FileManagerForm(files=[{'name': name} for name in list_sound_files()])
+    form4 = FileManagerForm(files=[{'name': name} for name in list_config_files()])
     return render_template('uploader.html', \
         form1=form1, form2=form2, form3=form3, form4=form4)
 
-@app.route('/manage_sound_uploads', methods=['POST'])
-@login_required
-def manage_sound_uploads():
-    form = FileManagerForm(files=[{'name': name} for name in list_sound_files()])
+def upload_file(form, folder):
     if form.validate_on_submit():
-        for file in form.files:
-            if file.remove.data:
-                name = file.data['name']
-                filename = os.path.join(app.config['SOUND_FOLDER'], name)
-                if os.path.exists(filename):
-                    os.remove(filename)
-                    flash_info('File "%s" removed' % name)
-                else:
-                    flash_error('File "%s" does not exist' % name)
+        filename = secure_filename(form.file.data.filename)
+        form.file.data.save(os.path.join(app.config[folder], filename))
+        flash_info('File "%s" uploaded' % filename)
     else:
         flash_form_errors(form)
     return redirect(url_for('upload'))
@@ -122,29 +104,33 @@ def upload_sound():
     form = SoundUploadForm()
     return upload_file(form, 'SOUND_FOLDER')
 
-@app.route('/manage_config_uploads', methods=['POST'])
-@login_required
-def manage_config_uploads():
-    form = FileManagerForm(files=[{'name': name} for name in list_config_files()])
-    if form.validate_on_submit():
-        for file in form.files:
-            if file.remove.data:
-                name = file.data['name']
-                filename = os.path.join(app.config['CONFIG_FOLDER'], name)
-                if os.path.exists(filename):
-                    os.remove(filename)
-                    flash_info('File "%s" removed' % name)
-                else:
-                    flash_error('File "%s" does not exist' % name)
-    else:
-        flash_form_errors(form)
-    return redirect(url_for('upload'))
-
 @app.route('/upload_config', methods=['POST'])
 @login_required
 def upload_config():
     form = ConfigUploadForm()
     return upload_file(form, 'CONFIG_FOLDER')
+
+@app.route('/manage_uploads/<string:utype>', methods=['POST'])
+@login_required
+def manage_uploads(utype):
+    if utype not in {'SOUND', 'CONFIG'}:
+        flash_error('Invalid upload type')
+    else:
+        folder = app.config['%s_FOLDER' % utype]
+        form = FileManagerForm(files=[{'name': name} for name in list_all_files(folder)])
+        if form.validate_on_submit():
+            for file in form.files:
+                if file.remove.data:
+                    name = file.data['name']
+                    filename = os.path.join(folder, name)
+                    if os.path.exists(filename):
+                        os.remove(filename)
+                        flash_info('File "%s" removed' % name)
+                    else:
+                        flash_error('File "%s" does not exist' % name)
+        else:
+            flash_form_errors(form)
+    return redirect(url_for('upload'))
 
 @app.route('/manage_configs', methods=['GET', 'POST'])
 @login_required
