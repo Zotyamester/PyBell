@@ -1,7 +1,4 @@
-import logging
 import os
-import sys
-import urllib.request
 
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
@@ -12,7 +9,8 @@ from app import app
 from app import bell as b
 from app import db
 from app.forms import (BellManagerForm, ConfigManagerForm, ConfigUploadForm,
-                       LoginForm, PlayInstantForm, SoundUploadForm, FileManagerForm)
+                       FileManagerForm, LoginForm, PlayInstantForm,
+                       SoundUploadForm)
 from app.models import User
 
 
