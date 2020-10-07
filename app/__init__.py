@@ -14,7 +14,7 @@ configs = {
     'SQLALCHEMY_TRACK_MODIFICATIONS' : False,
     'SOUND_FOLDER' : './sounds',
     'CONFIG_FOLDER' : './configs',
-    'CURRENT_CONFIG' : 'BellConfig.xml'
+    'CURRENT_CONFIG' : 'BellConfig_normal.xml'
 }
 
 for config, default in configs.items():
