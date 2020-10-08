@@ -22,9 +22,9 @@ class BellConfig:
             soundfile_node = dRing.getElementsByTagName('media')[0]
             soundfile = soundfile_node.firstChild.nodeValue
             days_node = dRing.getElementsByTagName('days')[0]
-            days = {x : (days_node.attributes[x].firstChild.nodeValue == '1') for x in WEEK}
+            days = {x: (days_node.attributes[x].firstChild.nodeValue == '1') for x in WEEK}
             time_nodes = dRing.getElementsByTagName('time')
-            times = [{x : int(time_node.attributes[x].firstChild.nodeValue) for x in TIME} for time_node in time_nodes]
+            times = [{x: int(time_node.attributes[x].firstChild.nodeValue) for x in TIME} for time_node in time_nodes]
 
             ring = BellConfig.Ring(soundfile, days, times)
             self.rings.append(ring)

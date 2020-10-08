@@ -1,20 +1,19 @@
 import os
 
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from flask_login import LoginManager
-
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
 configs = {
-    'SECRET_KEY' : 'my-secret-key',
-    'SQLALCHEMY_DATABASE_URI' : 'sqlite:///app.db',
-    'SQLALCHEMY_TRACK_MODIFICATIONS' : False,
-    'SOUND_FOLDER' : './sounds',
-    'CONFIG_FOLDER' : './configs',
-    'CURRENT_CONFIG' : 'BellConfig_normal.xml'
+    'SECRET_KEY': 'my-secret-key',
+    'SQLALCHEMY_DATABASE_URI': 'sqlite:///app.db',
+    'SQLALCHEMY_TRACK_MODIFICATIONS': False,
+    'SOUND_FOLDER': './sounds',
+    'CONFIG_FOLDER': './configs',
+    'CURRENT_CONFIG': 'BellConfig_normal.xml'
 }
 
 for config, default in configs.items():
