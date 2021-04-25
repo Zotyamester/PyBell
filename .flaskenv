@@ -1,1 +1,2 @@
 FLASK_APP=pybell.py
+FLASK_DEBUG=1
