@@ -1,6 +1,17 @@
+:root {
+    --white: #eceff4;
+    --whitish: #e5e9f0;
+    --grayish: #81a1c1;
+    --gray: #2e3440;
+    --greenish: #a3be8c;
+    --redish: #bf616a;
+    --bluish: #434c5e;
+    --blue: #3b4252;
+}
+
 body {
-    background-color: #e5e9f0;
-    color: #2e3440;
+    background-color: var(--whitish);
+    color: var(--gray);
     font-family: sans-serif;
     text-align: center;
     margin: 1% 1%;
@@ -10,14 +21,14 @@ header {
     border: hidden;
     border-radius: 5px;
     padding: 0;
-    background-color: #81a1c1;
+    background-color: var(--grayish);
 }
 
 h1 {
     padding-top: 20px;
     padding-bottom: 20px;
     font-size: 350%;
-    color: #eceff4;
+    color: var(--white);
 }
 
 main {
@@ -25,7 +36,7 @@ main {
     border-radius: 5px;
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: #eceff4;
+    background-color: var(--white);
 }
 
 #content {
@@ -34,14 +45,14 @@ main {
 
 .flash-info {
     padding: 8px;
-    background-color: #a3be8c;
-    color: #eceff4;
+    background-color: var(--greenish);
+    color: var(--white);
 }
 
 .flash-error {
     padding: 8px;
-    background-color: #bf616a;
-    color: #eceff4;
+    background-color: var(--redish);
+    color: var(--white);
 }
 
 #nav {
@@ -52,7 +63,7 @@ main {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #434c5e;
+    background-color: var(--bluish);
 }
 
 #nav li {
@@ -68,21 +79,21 @@ main {
 
 #nav li a {
     display: block;
-    color: #eceff4;
+    color: var(--white);
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
 
 #nav li a:hover {
-    background-color: #3b4252;
+    background-color: var(--blue);
 }
 
 input {
-    background-color: #434c5e;
+    background-color: var(--bluish);
     border: hidden;
     border-radius: 5px;
-    color: #eceff4;
+    color: var(--white);
     padding: 15px 30px;
     text-align: center;
     text-decoration: none;
@@ -91,14 +102,14 @@ input {
 }
 
 input:hover {
-    background-color: #3b4252;
+    background-color: var(--blue);
 }
 
 select {
-    background-color: #434c5e;
+    background-color: var(--bluish);
     border: hidden;
     border-radius: 5px;
-    color: #eceff4;
+    color: var(--white);
     padding: 15px 30px;
     text-align: center;
     text-decoration: none;
@@ -107,20 +118,11 @@ select {
 }
 
 p a, p a:link, p a:visited, p a:hover, p a:active {
-    color: #2e3440;
+    color: var(--gray);
     font-style: italic;
 }
 
 aside {
     float: right;
     text-align: left;
-}
-
-pre.bash {
-    background-color: black;
-    color: white;
-    font-size: medium; 
-    font-family: Consolas;
-    width: 100%;
-    display: inline-block;
 }
