@@ -48,6 +48,9 @@ def load_schedule(filename):
             for time in times:
                 sch.every().sunday.at(format_time(time['h'], time['m'], time['s'])).do(play_sound, soundfile)
 
+def bell_next():
+    return sch.next_run()
+
 def bell_start():
     global running, th
     if not running:

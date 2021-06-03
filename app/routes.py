@@ -148,7 +148,7 @@ def manage_configs():
 def manage_bell():
     form1 = BellManagerForm()
     form2 = PlayInstantForm(choices=list_sound_files())
-    return render_template('bell_manager.html', form1=form1, form2=form2, state=b.running)
+    return render_template('bell_manager.html', form1=form1, form2=form2, state=b.running, next_run=b.bell_next())
 
 @app.route('/manage_scheduler', methods=['POST'])
 @login_required

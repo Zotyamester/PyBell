@@ -2,7 +2,12 @@
 {% block title %}Manage bell{% endblock %}
 
 {% block content %}
-  <h2>The bell is currently {{ 'active' if state else 'inactive' }}.</h2>
+  {% if state %}
+    <h2>The bell s currently active.</h2>
+    <small>Next run: {{ next_run }}</small>
+  {% else %}
+    <h2>The bell s currently inactive.</h2>
+  {% endif %}
   <form method="post" action="{{ url_for('manage_scheduler') }}" enctype="multipart/form-data">
     {{ form1.hidden_tag() }}
     <p>
